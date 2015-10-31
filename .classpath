@@ -10,5 +10,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Logger"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Slick-Util"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
