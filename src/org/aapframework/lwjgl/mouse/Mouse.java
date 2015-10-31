@@ -5,6 +5,7 @@ import org.lwjgl.glfw.*;
 
 import java.nio.DoubleBuffer;
 
+import org.aapframework.logger.Logger;
 import org.lwjgl.BufferUtils;
 
 /**
@@ -23,6 +24,7 @@ public class Mouse extends GLFWCursorPosCallback{
 	private long windowID;
 	mouseButton mousebutton;
 	mouseScroll mousescroll;
+	Logger log = Logger.getInstance();
 	
 		/**
 		 * Initializes a mouse. This mouse is attached to just 1 window.
@@ -81,7 +83,7 @@ public class Mouse extends GLFWCursorPosCallback{
 		 * @return The boolean if the button is pressed or not.
 		 */
 		public boolean getMouseButtonState(int button){
-			return mousebutton.getButtonState(button);
+			return mousebutton.isButtonDown(button);
 		}
 		
 		/**
@@ -141,10 +143,12 @@ public class Mouse extends GLFWCursorPosCallback{
 		 */
 		@Override
 		public void invoke(long window, double xpos, double ypos) {
-			dX = xpos - this.X;
-			dY = ypos - this.Y;
-			this.X = xpos;
-			this.Y = ypos;			
+			if (window == windowID){
+				dX = xpos - this.X;
+				dY = ypos - this.Y;
+				this.X = xpos;
+				this.Y = ypos;			
+			}
 		}
 	
 }

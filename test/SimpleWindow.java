@@ -7,6 +7,7 @@ import org.lwjgl.system.MemoryUtil;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
+import org.aapframework.logger.Logger;
 import org.aapframework.lwjgl.mouse.Mouse;
 
 public class SimpleWindow {
@@ -18,11 +19,14 @@ public class SimpleWindow {
 	private static int windowHeight = 600;
 	private static int windowWidth = 800;
 	private static Mouse mouse1;
-
+	Logger log = Logger.getInstance();
+	
 /**
  * Method called to start the whole process
  */
 	public void start(){
+		log.setReportingLevel(Logger.Severity.DEBUG);
+		log.info("Hallo");
 		// Set the error handling code: all GLFW errors will be printed to the system error stream (just like println)
 		errorCallback = Callbacks.errorCallbackPrint(System.err);
 		glfwSetErrorCallback(errorCallback);

@@ -2,10 +2,13 @@ package org.aapframework.lwjgl.mouse;
 import org.lwjgl.glfw.GLFWScrollCallback;
 import static org.lwjgl.glfw.GLFW.*;
 
+import org.aapframework.logger.Logger;
+
 public class mouseScroll extends GLFWScrollCallback{
 	
 	private long windowID;
 	private double xScroll, yScroll;
+	Logger log = Logger.getInstance();
 	
 	public mouseScroll(long windowID){
 		this.setWindowID(windowID);
@@ -42,9 +45,11 @@ public class mouseScroll extends GLFWScrollCallback{
 
 	@Override
 	public void invoke(long window, double xoffset, double yoffset) {
-		this.setxScroll(xoffset);
-		this.setyScroll(yoffset);
-		System.out.println(yoffset);
+		if (window == windowID){
+			this.setxScroll(xoffset);
+			this.setyScroll(yoffset);
+			log.debug("x-offset: "+xoffset+" y-offset: "+yoffset);
+			}		
 	}
 
 }
