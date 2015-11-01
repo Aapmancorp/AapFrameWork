@@ -2,10 +2,6 @@ package org.aapframwork.lwjgl;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import java.nio.FloatBuffer;
-
-import org.lwjgl.BufferUtils;
-import org.lwjgl.util.vector.Matrix4f;
 
 public class GLU {
 	
