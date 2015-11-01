@@ -1,22 +1,15 @@
 package org.test.aapframework.window;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.glfw.GLFW.glfwGetKey;
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
-import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_FALSE;
-
-import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
 
 import org.aapframework.logger.Logger;
+import org.aapframework.lwjgl.objects.Axis;
 import org.aapframework.lwjgl.objects.Cube;
 import org.aapframework.lwjgl.window.Window;
-import org.lwjgl.BufferUtils;
-import org.newdawn.slick.util.Log;
 
 public class testWindow {
 
@@ -26,6 +19,7 @@ public class testWindow {
 		double X = 0;
 		Cube cube = new Cube(0, 0, 0, 1);
 		Logger log = Logger.getInstance();
+		Axis axis = new Axis(0, 10, 0, 50);
 		
 		window.drawOn3D();			
 		// Cullface
@@ -61,7 +55,9 @@ public class testWindow {
 			
 			glPushMatrix();
 			glTranslated(0, 0, -40+X);
-			glRotated(rotAngle, 0, 1, 0);			
+//			glRotated(rotAngle, 0, 1, 0);			
+			
+			axis.draw();
 			
 			glColor3d(1, 1, 1);
 			glBegin(GL_QUADS);
@@ -71,21 +67,9 @@ public class testWindow {
 			glVertex3d(10,10,0);
 			glEnd();
 			
-			glColor4f(1, 0, 0, 1);
-			glLineWidth(5f);
-			glBegin(GL_LINES);
-				glVertex3d(0, 0, 0);
-				glVertex3d(100,100,0);
-			glEnd();
-			
-			glColor4f(0, 1, 0, 1);
-			glBegin(GL_LINES);
-				glVertex3d(0, 0, 0);
-				glVertex3d(0,100,0);
-			glEnd();
-//			
-//			glRotated(rotAngle, 0, 1, 0);
+						
 			glColor3d(0, 1, 1);
+			glRotated(rotAngle, 0, 1, 0);
 			cube.draw();
 			glPopMatrix();
 			
