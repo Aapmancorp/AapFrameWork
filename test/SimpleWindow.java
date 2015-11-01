@@ -66,9 +66,7 @@ public class SimpleWindow {
 		mouse1 = new Mouse(windowID);
 			
 		
-		// Define window viewport
-
-		
+		// Define window viewport		
 		glViewport(0, 0, windowWidth, windowHeight);
 		
 		glMatrixMode(GL_PROJECTION);
