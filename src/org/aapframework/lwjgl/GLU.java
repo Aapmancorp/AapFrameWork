@@ -1,4 +1,4 @@
-package org.aapframwork.lwjgl;
+package org.aapframework.lwjgl;
 
 import static org.lwjgl.opengl.GL11.*;
 

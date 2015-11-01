@@ -1,5 +1,6 @@
 package org.aapframework.lwjgl.window;
 
+import static org.aapframework.lwjgl.GLU.*;
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
 import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
 import static org.lwjgl.glfw.GLFW.glfwInit;
@@ -15,7 +16,6 @@ import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.*;
-import static org.aapframwork.lwjgl.GLU.*;
 
 import org.aapframework.logger.Logger;
 import org.aapframework.lwjgl.mouse.Mouse;

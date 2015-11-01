@@ -1,4 +1,4 @@
-package org.aapframwork.lwjgl;
+package org.aapframework.lwjgl;
 
 import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;
