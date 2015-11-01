@@ -14,8 +14,8 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
-import static org.lwjgl.opengl.GL11.glViewport;
-import static org.lwjgl.util.glu.GLU.gluPerspective;
+import static org.lwjgl.opengl.GL11.*;
+import static org.aapframwork.lwjgl.GLU.*;
 
 import org.aapframework.logger.Logger;
 import org.aapframework.lwjgl.mouse.Mouse;
@@ -27,6 +27,7 @@ public class Window {
 	private int windowHeight;
 	private int windowWidth;
 	private Mouse mouse;
+	
 	Logger log = Logger.getInstance();
 	
 	
@@ -42,15 +43,17 @@ public class Window {
 	}
 
 	public Window(String windowTitle){
+		this.windowWidth = 800;
+		this.windowHeight = 600;		
 		// Initialize window
-		initWindow(800,600, windowTitle);
+		initWindow(windowWidth,windowHeight, windowTitle);
 		
 		// Create mouse
 		mouse = new Mouse(windowID);
 	}
 	
 	private void initWindow(int windowWidth, int windowHeight, String windowTitle){
-		// Initialize GLFW:
+				// Initialize GLFW:
 				int glfwInitializationResult = glfwInit(); // initialize GLFW and store the result (pass or fail)
 				
 				// Check if initializing succeeded
@@ -89,7 +92,7 @@ public class Window {
 				glViewport(0, 0, windowWidth, windowHeight);
 				
 				// Set clear color to black
-				glClearColor(0,0,1,0);
+				glClearColor(0,0,0,0);
 				
 				// setDrawing mode to 2D
 				drawOn2D();
@@ -105,7 +108,8 @@ public class Window {
 	public void drawOn3D(){
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		gluPerspective(60, (float)windowWidth/windowHeight, 0.001f, 100f);
+		gluPerspective(60, (float)windowWidth/(float)windowHeight, 0.001f, 100f);
+		glMatrixMode(GL_MODELVIEW);	
 	}
 	
 	public void destroyWindow(){
