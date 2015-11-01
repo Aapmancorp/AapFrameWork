@@ -1,32 +1,21 @@
 package org.aapframework.lwjgl.window;
 
 import static org.aapframework.lwjgl.GLU.*;
-import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
-import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
-import static org.lwjgl.glfw.GLFW.glfwInit;
-import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
-import static org.lwjgl.glfw.GLFW.glfwShowWindow;
-import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
-import static org.lwjgl.glfw.GLFW.glfwTerminate;
-import static org.lwjgl.opengl.GL11.GL_FALSE;
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.aapframework.logger.Logger;
 import org.aapframework.lwjgl.mouse.Mouse;
+import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.system.MemoryUtil;
 
-public class Window {
+public class Window extends GLFWWindowSizeCallback{
 	private long windowID;
 	private int windowHeight;
 	private int windowWidth;
 	private Mouse mouse;
+	private boolean drawOn2D;
 	
 	Logger log = Logger.getInstance();
 	
@@ -80,6 +69,9 @@ public class Window {
 				// Log a message
 				log.debug("Window has successfully been created!");
 				
+				// Assign callback
+				glfwSetWindowSizeCallback(windowID, this);
+				
 				glfwMakeContextCurrent(windowID); // Links the OpenGL context of the window to the current thread (GLFW_NO_CURRENT_CONTEXT error)
 				glfwSwapInterval(1); // Enable VSync, which effective caps the frame-rate of the application to 60 frames-per-second		
 				glfwShowWindow(windowID);
@@ -99,13 +91,15 @@ public class Window {
 	}
 	
 	public void drawOn2D(){
+		drawOn2D = true;
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		glOrtho(0, windowWidth, windowHeight, 0,-1,1);
-		glMatrixMode(GL_MODELVIEW);		
+		glMatrixMode(GL_MODELVIEW);
 	}
 	
 	public void drawOn3D(){
+		drawOn2D = false;
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		gluPerspective(60, (float)windowWidth/(float)windowHeight, 0.001f, 100f);
@@ -119,6 +113,30 @@ public class Window {
 		glfwTerminate();
 	}
 	
+	/**
+	 * Handles the window resized event. When the window is resized the viewport and projection matrix need to be
+	 * adjusted as well.
+	 */
+	@Override
+	public void invoke(long window, int width, int height) {
+		if (window==windowID){
+			// Set the class variables
+			windowWidth  = width;
+			windowHeight = height;
+			
+			// Define window viewport		
+			glViewport(0, 0, windowWidth, windowHeight);			
+			log.debug("Window has bee resized!");
+			
+			// Reset the projection matrix
+			if (drawOn2D){
+				drawOn2D();
+				return;
+			}
+			drawOn3D();			
+		}
+	}
+
 	public void grabMouse(){
 		mouse.setGrabbed();
 	}

@@ -24,7 +24,7 @@ public class testWindow {
 		window.drawOn3D();			
 		// Cullface
 		glCullFace(GL_BACK);
-		glDisable(GL_CULL_FACE);
+		glEnable(GL_CULL_FACE);
 		
 		//depth
 		glEnable(GL_DEPTH_TEST);
@@ -34,11 +34,12 @@ public class testWindow {
 		glDepthFunc(GL_LEQUAL);
 		//
 		glEnable(GL_LIGHT0);
-		glDisable(GL_LIGHTING);
+		glEnable(GL_LIGHTING);
 		
 		
 		
 		while(glfwWindowShouldClose(window.getWindowID())== GL_FALSE){
+			window.drawOn3D();
 			// Clear the contents of the window (try disabling this and resizing the window � fun guaranteed)
 			glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 			
@@ -58,19 +59,24 @@ public class testWindow {
 //			glRotated(rotAngle, 0, 1, 0);			
 			
 			axis.draw();
-			
-			glColor3d(1, 1, 1);
-			glBegin(GL_QUADS);
-			glVertex3d(-10, 10, 0);
-			glVertex3d(-10,-10,0);
-			glVertex3d(10,-10,0);
-			glVertex3d(10,10,0);
-			glEnd();
-			
-						
 			glColor3d(0, 1, 1);
 			glRotated(rotAngle, 0, 1, 0);
 			cube.draw();
+			glPopMatrix();
+			
+			window.drawOn2D();
+			glPushMatrix();
+			glColor3d(1, 1, 1);
+	
+			glBegin(GL_QUADS);
+			glVertex2d(0, 0);	
+			glVertex2d(0, 100);	
+			glVertex2d(200, 100);	
+			glVertex2d(200, 0);	
+			glEnd();
+
+			
+						
 			glPopMatrix();
 			
 			// Swaps the front and back framebuffers, this is a very technical process which you don't necessarily
