@@ -136,6 +136,10 @@ public class Window extends GLFWWindowSizeCallback{
 			drawOn3D();			
 		}
 	}
+	
+	public boolean isCloseRequested(){
+		return glfwWindowShouldClose(windowID) == GL_TRUE;
+	}
 
 	public void grabMouse(){
 		mouse.setGrabbed();
