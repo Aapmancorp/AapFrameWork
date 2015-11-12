@@ -38,7 +38,7 @@ public class testWindow {
 		
 		
 		
-		while(glfwWindowShouldClose(window.getWindowID())== GL_FALSE){
+		while(!window.isCloseRequested()){
 			window.drawOn3D();
 			// Clear the contents of the window (try disabling this and resizing the window � fun guaranteed)
 			glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
