@@ -23,14 +23,32 @@ import org.newdawn.slick.opengl.TextureImpl;
  * @author ZL   -  Learnt from tutorial of Oskar Veerhoek from the Coding Universe
  *
  */
-public class Model {
+public class Model extends StdObject{
+	/** List containing the vertices */
 	private List<Vector3f> vertices = new ArrayList<Vector3f>();
+	
+	/** List containing the normal vectors */
 	private List<Vector3f> normals = new ArrayList<Vector3f>();
+	
+	/** List containing the texture coordinates */
 	private List<Vector2f> texcoords = new ArrayList<Vector2f>();
+	
+	/** List containing the face objects */
 	private List<Face> faces = new ArrayList<Face>();
+	
+	/** List containing the material objects */
 	private List<Materialm> mtl = new ArrayList<Materialm>();
+	
+	/** integer to hold the number generated for the displayList */
+	private int callListNumber = -1;
 
-	public Model() {}
+	/**
+	 * Constructor. Places the object in the origin.
+	 */
+	public Model() {
+		super(0,0,0);
+	}
+	
 	/**
 	 * Parsing the model (vertices, texcoords, normals, faces)
 	 * @param f
@@ -38,42 +56,72 @@ public class Model {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public static Model loadModel(String folder, String file) throws FileNotFoundException, IOException {
+	public static Model loadModel(String folderLocation, String fileName) throws FileNotFoundException, IOException {
+		// Initialize the material path, this will hold the file name of the .mtl file.
 		String mtlpath= null;
-		BufferedReader reader = new BufferedReader(new FileReader(new File(folder+file)));
+		
+		// If the folderName does not end with "/" append it.
+		if (!folderLocation.endsWith("/")){
+			folderLocation = folderLocation + "/";
+		}
+		
+		// Open the stream to the .obj file
+		BufferedReader reader = new BufferedReader(new FileReader(new File(folderLocation+fileName)));
+		
+		// Instantiate a new Model
 		Model m = new Model();
+		
+		// Temp variable to store a read line.
 		String line;
+		
+		// Contains the name of the material currently used. The material properties are defined in the .mtl file.
 		String currentMTL = null;
 		
-		while ((line = reader.readLine()) != null) { // goes through the file line by line
+		// Loop over the .obj file to parse all the vertices, normal vectors and texture coordinates
+		while ((line = reader.readLine()) != null) { 
+			
+			// This refers to the .mtl file name used to store the material properties.
 			if(line.startsWith("mtllib ")){
 				mtlpath = line.split(" ")[1];
 				try{
-					m.setMaterials(Materialm.loadMTL(folder,mtlpath));
+					// If a material file is referenced, read that file.
+					m.setMaterials(Materialm.loadMTL(folderLocation,mtlpath));
 				}catch(Exception e){}
-			} else if (line.startsWith("v ")) {
+			} 
+			// Parse the vertices
+			else if (line.startsWith("v ")) {
 				float x = Float.valueOf(line.split(" ")[1]);
 				float y = Float.valueOf(line.split(" ")[2]);
 				float z = Float.valueOf(line.split(" ")[3]);
 				m.vertices.add(new Vector3f(x, y, z));
-			} else if (line.startsWith("vn ")) {
+			} 
+			// Parse the normal vectors
+			else if (line.startsWith("vn ")) {
 				float x = Float.valueOf(line.split(" ")[1]);
 				float y = Float.valueOf(line.split(" ")[2]);
 				float z = Float.valueOf(line.split(" ")[3]);
 				m.normals.add(new Vector3f(x, y, z));
-			} else if (line.startsWith("vt ")) {
+			} 
+			// Parse the texture coordinates
+			else if (line.startsWith("vt ")) {
 			    float x = Float.valueOf(line.split(" ")[1]);
 			    float y = Float.valueOf(line.split(" ")[2]);
 			    m.texcoords.add(new Vector2f(x,y));
-			} else if(line.startsWith("usemtl ")){
+			} 
+			// This indicates which material defined in the .mtl file is used.
+			else if(line.startsWith("usemtl ")){
 				currentMTL = line.split(" ")[1];
-			} else if (line.startsWith("f ")) {
-				
+			} 
+			// This defines the faces. Linking the vertices, normals and texture coordinates to one triangular face.
+			else if (line.startsWith("f ")) {
+				// Collect the indices of the vertices in the vertex List
 				Vector3f vertexIndices = new Vector3f(
 						Float.valueOf(line.split(" ")[1].split("/")[0]) - 1, 
 						Float.valueOf(line.split(" ")[2].split("/")[0]) - 1, 
 						Float.valueOf(line.split(" ")[3].split("/")[0]) - 1);
 				
+				// In case texture coordinates are defined, collect the indices of the texture
+				// coordinates in the texture coordinates list
 				Vector3f textureIndices = null;
 				try{
 						textureIndices = new Vector3f(
@@ -81,16 +129,40 @@ public class Model {
 						Float.valueOf(line.split(" ")[2].split("/")[1]) - 1, 
 						Float.valueOf(line.split(" ")[3].split("/")[1]) - 1);
 				}catch(Exception e){}
+				
+				// Collect the indices of the vertex normals list
 				Vector3f normalIndices = new Vector3f(
 						Float.valueOf(line.split(" ")[1].split("/")[2]) - 1, 
 						Float.valueOf(line.split(" ")[2].split("/")[2]) - 1, 
 						Float.valueOf(line.split(" ")[3].split("/")[2]) - 1);
+				
+				// With the vertices, texture coordinates, normal vectors and the current material, create a new triangular face.
 				m.faces.add(new Face(vertexIndices, normalIndices, textureIndices, currentMTL));
 			}
 		}
+		
+		// Done reading. Close the inputstream.
 		reader.close();
+		
+		// Return the loaded model.
 		return m;
 	}
+	
+	/**
+	 * Draw the model
+	 */
+	@Override
+	public void draw(){
+		// Check if the drawList has already been made
+		if (callListNumber == -1){
+			// Genereate the displayList
+			callListNumber = generateDList();
+		}
+		
+		// Draw the model.
+		glCallList(callListNumber);
+	}
+	
 	/**
 	 * Generate the display list
 	 * @return the display list pointer
@@ -275,7 +347,7 @@ class Materialm{
 	 * @throws IOException
 	 */
 	public static ArrayList<Materialm> loadMTL(String folder,String mtlpath) throws IOException{
-		BufferedReader reader = new BufferedReader(new FileReader(new File(folder+mtlpath)));
+		BufferedReader reader = new BufferedReader(new FileReader(new File(folder+"/"+mtlpath)));
 		ArrayList<Materialm> mtllist = new ArrayList<Materialm>();
 		String line;
 		int counter =-1;
