@@ -21,12 +21,18 @@ public class Text{
 	private Font awtFont;
 	private TrueTypeFont myfont;
 	private float baseFontSize = 54;
+	private float lastX;
+	private float lastY;
+	private float lastFontSize;
+	private Color lastColor;
+	
 	/**
 	 * loads the ttf file
 	 * @param fontpath
 	 */
 	public Text(String fontpath){
 		initFont(fontpath);
+		initCache();
 	}
 	/**
 	 * Renders the text on the screen.
@@ -47,6 +53,13 @@ public class Text{
 	 * @param color the color of the text (Slick Util)
 	 */
 	public void draw(float x , float y , float FontSize, String text, Color color){
+		// Remember the current settings
+		lastX = x;
+		lastY = y;
+		lastFontSize = FontSize;
+		lastColor = color;
+		
+		// Scale the font texture
 		float derivedFont = FontSize/baseFontSize;
 		glPushAttrib(GL_ENABLE_BIT);
 		glEnable(GL_BLEND);
@@ -58,6 +71,26 @@ public class Text{
 		myfont.drawString(0, 0, text,color);
 		glPopMatrix();
 		glPopAttrib();
+	}
+	
+	public void initCache(){
+		lastX = 0;
+		lastY = 0;
+		lastFontSize = 12;
+		lastColor = Color.white;
+	}
+	/**
+	 * Draw using previous settings.
+	 * @param text
+	 */
+	public void draw(String text){
+		draw(lastX, lastY, lastFontSize, text, lastColor);
+	}
+	/**
+	 * Go to the next line. After this command use the draw method with only a String as input.
+	 */
+	public void newLine(){
+		lastY += getHeight(lastFontSize);
 	}
 	/**
 	 * The width of the Text
