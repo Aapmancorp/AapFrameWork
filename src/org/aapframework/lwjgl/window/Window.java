@@ -113,6 +113,17 @@ public class Window extends GLFWWindowSizeCallback{
 		glfwTerminate();
 	}
 	
+	public void clearScreen(){
+		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	}
+	
+	public void updateScreen(){
+		// Polls the user input. This is very important, because it prevents your application from becoming unresponsive
+		glfwPollEvents();
+		// Swaps buffer
+		glfwSwapBuffers(windowID);
+	}
+	
 	/**
 	 * Handles the window resized event. When the window is resized the viewport and projection matrix need to be
 	 * adjusted as well.
