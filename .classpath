@@ -9,5 +9,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/ibxm.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jogg-0.0.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jorbis-0.0.15.jar"/>
+	<classpathentry exported="true" kind="lib" path="Slick-Util/slickUtilCustom.jar" sourcepath="Slick-Util/SlickUtilCustom.src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
