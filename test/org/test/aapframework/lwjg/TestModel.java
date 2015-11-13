@@ -5,8 +5,6 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
 import static org.lwjgl.glfw.GLFW.glfwGetKey;
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.io.FileNotFoundException;
