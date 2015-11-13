@@ -3,12 +3,26 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Logger"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/LWJGL"/>
 	<classpathentry exported="true" kind="lib" path="lib/disruptor.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/ibxm.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jogg-0.0.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jorbis-0.0.15.jar"/>
-	<classpathentry exported="true" kind="lib" path="Slick-Util/slickUtilCustom.jar" sourcepath="Slick-Util/SlickUtilCustom.src.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/Logger/log4j-api-2.4.1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/AapFrameWork/lib/Logger/log4j-api-2.4.1-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/Logger/log4j-core-2.4.1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/AapFrameWork/lib/Logger/log4j-core-2.4.1-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/LWJGL/lwjgl.jar" sourcepath="lib/LWJGL/lwjgl_src.zip">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/AapFrameWork/lib/LWJGL/javadoc.zip!/"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="AapFrameWork/lib/LWJGL/native"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/Slick-Util/slickUtilCustom.jar" sourcepath="lib/Slick-Util/SlickUtilCustom.src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
