@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.aapframework.logger.Logger;
+import org.aapframework.lwjgl.Text;
 import org.aapframework.lwjgl.objects.Axis;
 import org.aapframework.lwjgl.objects.Cube;
 import org.aapframework.lwjgl.objects.Model;
@@ -26,7 +27,7 @@ public class TestModel {
 		Cube cube = new Cube(0, 0, 0, 10);
 		Logger log = Logger.getInstance();
 		Axis axis = new Axis(0, 10, 0, 50);
-		
+		Text CONSOLAS = new Text("./res/Consolas.ttf");	
 		// Load model
 		Model cubeZhiLi = Model.loadModel("./res", "cubeZhiLi.obj");
 		
@@ -51,12 +52,8 @@ public class TestModel {
 		
 		while(!window.isCloseRequested()){
 			window.drawOn3D();
-			// Clear the contents of the window (try disabling this and resizing the window � fun guaranteed)
-			glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-			
-			// Polls the user input. This is very important, because it prevents your application from becoming unresponsive
-			glfwPollEvents();
-			
+			window.clearScreen();
+						
 			rotAngle = (glfwGetKey(window.getWindowID(), GLFW_KEY_RIGHT) == 1) ? rotAngle+5 : rotAngle;
 			rotAngle = (glfwGetKey(window.getWindowID(), GLFW_KEY_LEFT) == 1) ? rotAngle-5 : rotAngle;
 			
@@ -82,7 +79,7 @@ public class TestModel {
 			
 			window.drawOn2D();
 			glPushMatrix();
-			glColor3d(1, 1, 1);
+			glColor3d(.1, .1,.1);
 	
 			glBegin(GL_QUADS);
 			glVertex2d(0, 0);	
@@ -90,13 +87,13 @@ public class TestModel {
 			glVertex2d(200, 100);	
 			glVertex2d(200, 0);	
 			glEnd();		
-						
+			
+			CONSOLAS.draw(0, 0, 35, "Hello World!\n Hello World!");	
+			
 			glPopMatrix();
 			glPopAttrib();
 			
-			// Swaps the front and back framebuffers, this is a very technical process which you don't necessarily
-			// need to understand. You can simply see this method as updating the window contents.
-			glfwSwapBuffers(window.getWindowID());		
+			window.updateScreen();		
 		}
 		
 		window.destroyWindow();
