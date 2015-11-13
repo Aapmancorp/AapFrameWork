@@ -148,7 +148,7 @@ public class Mouse extends GLFWCursorPosCallback{
 				dY = ypos - this.Y;
 				this.X = xpos;
 				this.Y = ypos;			
-				log.debug("x: "+xpos+" y: "+ypos);
+				log.info("x: "+xpos+" y: "+ypos);
 			}
 		}
 	
