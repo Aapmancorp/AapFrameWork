@@ -27,11 +27,6 @@ public class Text{
 	private Color lastColor;
 	private Location lastLocation;
 	
-	/** location of the string which is used as reference to place the string. */
-	public enum Location{
-		TOP_LEFT, TOP_CENTER, TOP_RIGHT, MID_LEFT, MID_CENTER, MID_RIGHT, BOT_LEFT, BOT_CENTER, BOT_RIGHT;
-	}
-	
 	/**
 	 * loads the ttf file
 	 * @param fontpath
@@ -40,16 +35,7 @@ public class Text{
 		initFont(fontpath);
 		initCache();
 	}
-	/**
-	 * Renders the text on the screen.
-	 * @param x left coordinate
-	 * @param y top coordinate
-	 * @param FontSize size of the font
-	 * @param text Output text as a String
-	 */
-	public void draw(double x , double y , double FontSize, String text){
-		draw(x, y, FontSize, text, Color.white, Location.TOP_LEFT);
-	}
+
 	/**
 	 * Renders the text on the screen.
 	 * @param x left coordinate
@@ -57,6 +43,7 @@ public class Text{
 	 * @param FontSize size of the font
 	 * @param text Output text as a String
 	 * @param color the color of the text (Slick Util)
+	 * @param location The location on the string to pinpoint.
 	 */
 	public void draw(double x , double y , double FontSize, String text, Color color, Location location){
 		// Remember the current settings
@@ -115,14 +102,29 @@ public class Text{
 		// Save the rotation Matrix
 		glPushMatrix();		
 		
+		// Move the text to the desired location
 		glTranslated(x+dXForLocation, y+dYForLocation, 0);
+		
+		// Scale the font to the desired size 
 		glScaled(derivedFont, derivedFont, derivedFont);
+		// Unbind last texture. Other wise the font texture might have problems loading
 		TextureImpl.unbind();
+		
+		//Draw it.
 		myfont.drawString(0, 0, text,color);
 		
 		// Restore settings
 		glPopMatrix();
 		glPopAttrib();
+	}
+	/** Several overloading methods for draw*/
+	public void draw(double x , double y , double FontSize, String text){
+		draw(x, y, FontSize, text, Color.white, Location.TOP_LEFT);
+	}
+	
+	public void draw(String text, Location location){
+		lastLocation = location;
+		draw(lastX, lastY, lastFontSize, text, lastColor, lastLocation);
 	}
 	
 	/**
