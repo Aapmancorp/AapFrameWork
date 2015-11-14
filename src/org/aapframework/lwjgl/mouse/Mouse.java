@@ -19,6 +19,12 @@ import org.lwjgl.BufferUtils;
  */
 
 public class Mouse extends GLFWCursorPosCallback implements Observable, Observer{
+	/** Common mouse buttons */
+	public static int LEFT_MOUSE_BUTTON = 0;
+	public static int RIGHT_MOUSE_BUTTON = 1;
+	public static int MIDDLE_MOUSE_BUTTON = 2;
+	
+	
 	
 	private double X, Y, dX = 0, dY = 0;
 	
@@ -29,6 +35,7 @@ public class Mouse extends GLFWCursorPosCallback implements Observable, Observer
 	mouseScroll mousescroll;
 	Logger log = Logger.getInstance();
 	private ArrayList<Observer> observerList;
+	
 	
 		/**
 		 * Initializes a mouse. This mouse is attached to just 1 window.

@@ -12,12 +12,14 @@ import java.io.IOException;
 
 import org.aapframework.logger.Logger;
 import org.aapframework.logger.Logger.Severity;
+import org.aapframework.lwjgl.Util;
 import org.aapframework.lwjgl.formObjects.Button;
 import org.aapframework.lwjgl.formObjects.Text;
 import org.aapframework.lwjgl.objects.Axis;
 import org.aapframework.lwjgl.objects.Cube;
 import org.aapframework.lwjgl.objects.Model;
 import org.aapframework.lwjgl.window.Window;
+import org.newdawn.slick.Color;
 
 public class TestModel {
 	public static void main(String[] args) throws FileNotFoundException, IOException{
@@ -30,11 +32,11 @@ public class TestModel {
 		Text CONSOLAS = new Text("./res/Consolas.ttf");	
 		log.setReportingLevel(Severity.DEBUG);
 		
-		Button button = new Button(0, 0, 200, 300);
-		Button button2 = new Button(500, 500, 200, 300);
+		Button button = new Button(0.0, 0.0, 200.0, 300.0,Util.loadtexture("./res/cubeZhiLi.png", false),Util.loadtexture("./res/texture.jpg", false),"1",CONSOLAS,Color.white);
+//		Button button2 = new Button(500, 500, 200, 300);
 		
 		window.getMouse().addObserver(button);
-		window.getMouse().addObserver(button2);
+//		window.getMouse().addObserver(button2);
 		
 		// Load model
 		Model cubeZhiLi = Model.loadModel("./res", "cubeZhiLi.obj");
@@ -87,7 +89,7 @@ public class TestModel {
 			
 			window.drawOn2D();
 			button.draw();
-			button2.draw();
+//			button2.draw();
 //			glPushMatrix();
 //			glColor3d(.1, .1,.1);
 //	
