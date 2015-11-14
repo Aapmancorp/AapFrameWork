@@ -1,7 +1,7 @@
 import org.aapframework.Utils.getTime;
 import org.aapframework.logger.Logger;
 import org.aapframework.logger.Logger.Severity;
-import org.aapframework.lwjgl.Text;
+import org.aapframework.lwjgl.formObjects.Text;
 import org.aapframework.lwjgl.shapes.StdShapes;
 import org.aapframework.lwjgl.window.Window;
 import static org.lwjgl.opengl.GL11.*;

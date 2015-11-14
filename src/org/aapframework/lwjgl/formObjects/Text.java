@@ -1,4 +1,4 @@
-package org.aapframework.lwjgl;
+package org.aapframework.lwjgl.formObjects;
 
 import java.awt.Font;
 import java.io.InputStream;
@@ -125,6 +125,9 @@ public class Text{
 		glPopAttrib();
 	}
 	
+	/**
+	 * Sets the initial values for the easy Texting
+	 */
 	public void initCache(){
 		lastX = 0;
 		lastY = 0;
@@ -146,6 +149,22 @@ public class Text{
 		lastY += getHeight(lastFontSize);
 	}
 	/**
+	 * Loads the font
+	 * @param fontpath location of your ttf file
+	 */
+	public void initFont(String fontpath){
+		try {			
+			InputStream inputStream	= ResourceLoader.getResourceAsStream(fontpath);
+			
+			awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);		
+			awtFont = awtFont.deriveFont(baseFontSize); // set font size
+			myfont = new TrueTypeFont(awtFont, true);			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
 	 * The width of the Text
 	 * @param FontSize
 	 * @param text your string
@@ -161,21 +180,5 @@ public class Text{
 	 */
 	public double getHeight(double FontSize){
 		return (myfont.getHeight()*FontSize/baseFontSize);
-	}
-	/**
-	 * Loads the font
-	 * @param fontpath location of your ttf file
-	 */
-	public void initFont(String fontpath){
-		try {			
-			InputStream inputStream	= ResourceLoader.getResourceAsStream(fontpath);
-
-			awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);		
-			awtFont = awtFont.deriveFont(baseFontSize); // set font size
-			myfont = new TrueTypeFont(awtFont, true);			
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }

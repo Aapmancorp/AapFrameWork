@@ -11,7 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.aapframework.logger.Logger;
-import org.aapframework.lwjgl.Text;
+import org.aapframework.lwjgl.formObjects.Text;
 import org.aapframework.lwjgl.objects.Axis;
 import org.aapframework.lwjgl.objects.Cube;
 import org.aapframework.lwjgl.objects.Model;
