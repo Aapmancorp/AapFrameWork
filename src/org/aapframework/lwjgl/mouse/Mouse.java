@@ -4,7 +4,10 @@ import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.glfw.*;
 
 import java.nio.DoubleBuffer;
+import java.util.ArrayList;
 
+import org.aapframework.events.Observable;
+import org.aapframework.events.Observer;
 import org.aapframework.logger.Logger;
 import org.lwjgl.BufferUtils;
 
@@ -15,7 +18,7 @@ import org.lwjgl.BufferUtils;
  *
  */
 
-public class Mouse extends GLFWCursorPosCallback{
+public class Mouse extends GLFWCursorPosCallback implements Observable, Observer{
 	
 	private double X, Y, dX = 0, dY = 0;
 	
@@ -25,6 +28,7 @@ public class Mouse extends GLFWCursorPosCallback{
 	mouseButton mousebutton;
 	mouseScroll mousescroll;
 	Logger log = Logger.getInstance();
+	private ArrayList<Observer> observerList;
 	
 		/**
 		 * Initializes a mouse. This mouse is attached to just 1 window.
@@ -36,6 +40,10 @@ public class Mouse extends GLFWCursorPosCallback{
 			glfwSetCursorPosCallback(windowID, this);
 			mousebutton = new mouseButton(windowID);
 			mousescroll = new mouseScroll(windowID);
+			
+			mousebutton.addObserver(this);
+			mousescroll.addObserver(this);
+			observerList = new ArrayList<>();
 		}
 		
 		/**
@@ -149,7 +157,31 @@ public class Mouse extends GLFWCursorPosCallback{
 				this.X = xpos;
 				this.Y = ypos;			
 				log.info("x: "+xpos+" y: "+ypos);
+				// Notify all observers
+				notifyAllObservers();
 			}
+		}
+
+		@Override
+		public void addObserver(Observer observer) {
+			observerList.add(observer);			
+		}
+
+		@Override
+		public void removeObserver(Observer observer) {
+			observerList.remove(observer);			
+		}
+
+		@Override
+		public void notifyAllObservers() {
+			for (Observer obs:observerList){
+				obs.update(this);
+			}
+		}
+
+		@Override
+		public void update(Observable observable) {
+			notifyAllObservers();
 		}
 	
 }

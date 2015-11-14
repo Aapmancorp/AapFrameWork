@@ -2,17 +2,23 @@ package org.aapframework.lwjgl.mouse;
 import org.lwjgl.glfw.GLFWScrollCallback;
 import static org.lwjgl.glfw.GLFW.*;
 
+import java.util.ArrayList;
+
+import org.aapframework.events.Observable;
+import org.aapframework.events.Observer;
 import org.aapframework.logger.Logger;
 
-public class mouseScroll extends GLFWScrollCallback{
+public class mouseScroll extends GLFWScrollCallback implements Observable{
 	
 	private long windowID;
 	private double xScroll, yScroll;
 	Logger log = Logger.getInstance();
+	private ArrayList<Observer> observerList;
 	
 	public mouseScroll(long windowID){
 		this.setWindowID(windowID);
 		glfwSetScrollCallback(windowID, this);
+		observerList = new ArrayList<>();
 	}
 		
 	public long getWindowID() {
@@ -48,8 +54,26 @@ public class mouseScroll extends GLFWScrollCallback{
 		if (window == windowID){
 			this.setxScroll(xoffset);
 			this.setyScroll(yoffset);
-			log.debug("x-offset: "+xoffset+" y-offset: "+yoffset);
+			log.info("x-offset: "+xoffset+" y-offset: "+yoffset);
+			notifyAllObservers();
 			}		
+	}
+
+	@Override
+	public void addObserver(Observer observer) {
+		observerList.add(observer);			
+	}
+
+	@Override
+	public void removeObserver(Observer observer) {
+		observerList.remove(observer);			
+	}
+
+	@Override
+	public void notifyAllObservers() {
+		for (Observer obs:observerList){
+			obs.update(this);
+		}
 	}
 
 }

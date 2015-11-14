@@ -3,6 +3,10 @@ package org.aapframework.lwjgl.mouse;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import static org.lwjgl.glfw.GLFW.*;
 
+import java.util.ArrayList;
+
+import org.aapframework.events.Observable;
+import org.aapframework.events.Observer;
 import org.aapframework.logger.Logger;
 
 /**
@@ -11,7 +15,7 @@ import org.aapframework.logger.Logger;
  * @author zl
  *
  */
-public class mouseButton extends GLFWMouseButtonCallback{
+public class mouseButton extends GLFWMouseButtonCallback implements Observable{
 	// Captures if a mouse button is down or not
 	boolean[] mouseButtonStates = new boolean[8];
 	
@@ -21,6 +25,9 @@ public class mouseButton extends GLFWMouseButtonCallback{
 	// Logger
 	Logger log = Logger.getInstance();
 	
+	// Observer list
+	private ArrayList<Observer> observerList;
+	
 	/**
 	 * Initializes the call back
 	 * @param windowID The window to listen to
@@ -28,6 +35,7 @@ public class mouseButton extends GLFWMouseButtonCallback{
 	public mouseButton(long windowID){
 		this.setWindowID(windowID);
 		glfwSetMouseButtonCallback(windowID, this);
+		observerList = new ArrayList<>();
 	}
 	
 	/**
@@ -50,7 +58,25 @@ public class mouseButton extends GLFWMouseButtonCallback{
 	@Override
 	public void invoke(long window, int button, int action, int mods) {
 		if (window == windowID){
-			mouseButtonStates[button] = action==1;				
+			mouseButtonStates[button] = action==1;	
+			notifyAllObservers();
+		}
+	}
+
+	@Override
+	public void addObserver(Observer observer) {
+		observerList.add(observer);			
+	}
+
+	@Override
+	public void removeObserver(Observer observer) {
+		observerList.remove(observer);			
+	}
+
+	@Override
+	public void notifyAllObservers() {
+		for (Observer obs:observerList){
+			obs.update(this);
 		}
 	}
 

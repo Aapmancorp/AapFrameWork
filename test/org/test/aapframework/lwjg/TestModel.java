@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.aapframework.logger.Logger;
+import org.aapframework.logger.Logger.Severity;
 import org.aapframework.lwjgl.formObjects.Text;
 import org.aapframework.lwjgl.objects.Axis;
 import org.aapframework.lwjgl.objects.Cube;
@@ -26,6 +27,8 @@ public class TestModel {
 		Logger log = Logger.getInstance();
 		Axis axis = new Axis(0, 10, 0, 50);
 		Text CONSOLAS = new Text("./res/Consolas.ttf");	
+		log.setReportingLevel(Severity.DEBUG);
+		
 		// Load model
 		Model cubeZhiLi = Model.loadModel("./res", "cubeZhiLi.obj");
 		
@@ -58,7 +61,7 @@ public class TestModel {
 			X = (glfwGetKey(window.getWindowID(), GLFW_KEY_UP) == 1) ? X+.5 : X;
 			X = (glfwGetKey(window.getWindowID(), GLFW_KEY_DOWN) == 1) ? X-.5 : X;
 			
-			log.debug(""+X);
+//			log.debug(""+X);
 			
 			glPushMatrix();
 			glTranslated(0, 0, -40+X);
