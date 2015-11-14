@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import org.aapframework.logger.Logger;
 import org.aapframework.logger.Logger.Severity;
+import org.aapframework.lwjgl.formObjects.Button;
 import org.aapframework.lwjgl.formObjects.Text;
 import org.aapframework.lwjgl.objects.Axis;
 import org.aapframework.lwjgl.objects.Cube;
@@ -28,6 +29,12 @@ public class TestModel {
 		Axis axis = new Axis(0, 10, 0, 50);
 		Text CONSOLAS = new Text("./res/Consolas.ttf");	
 		log.setReportingLevel(Severity.DEBUG);
+		
+		Button button = new Button(0, 0, 200, 300);
+		Button button2 = new Button(500, 500, 200, 300);
+		
+		window.getMouse().addObserver(button);
+		window.getMouse().addObserver(button2);
 		
 		// Load model
 		Model cubeZhiLi = Model.loadModel("./res", "cubeZhiLi.obj");
@@ -79,19 +86,21 @@ public class TestModel {
 			
 			
 			window.drawOn2D();
-			glPushMatrix();
-			glColor3d(.1, .1,.1);
-	
-			glBegin(GL_QUADS);
-			glVertex2d(0, 0);	
-			glVertex2d(0, 100);	
-			glVertex2d(200, 100);	
-			glVertex2d(200, 0);	
-			glEnd();		
-			
-			CONSOLAS.draw(0, 0, 35, "Hello World!\n Hello World!");	
-			
-			glPopMatrix();
+			button.draw();
+			button2.draw();
+//			glPushMatrix();
+//			glColor3d(.1, .1,.1);
+//	
+//			glBegin(GL_QUADS);
+//			glVertex2d(0, 0);	
+//			glVertex2d(0, 100);	
+//			glVertex2d(200, 100);	
+//			glVertex2d(200, 0);	
+//			glEnd();		
+//			
+//			CONSOLAS.draw(0, 0, 35, "Hello World!\n Hello World!");	
+//			
+//			glPopMatrix();
 			glPopAttrib();
 			
 			window.updateScreen();		
