@@ -21,10 +21,16 @@ public class Text{
 	private Font awtFont;
 	private TrueTypeFont myfont;
 	private float baseFontSize = 54;
-	private float lastX;
-	private float lastY;
-	private float lastFontSize;
+	private double lastX;
+	private double lastY;
+	private double lastFontSize;
 	private Color lastColor;
+	private Location lastLocation;
+	
+	/** location of the string which is used as reference to place the string. */
+	public enum Location{
+		TOP_LEFT, TOP_CENTER, TOP_RIGHT, MID_LEFT, MID_CENTER, MID_RIGHT, BOT_LEFT, BOT_CENTER, BOT_RIGHT;
+	}
 	
 	/**
 	 * loads the ttf file
@@ -41,8 +47,8 @@ public class Text{
 	 * @param FontSize size of the font
 	 * @param text Output text as a String
 	 */
-	public void draw(float x , float y , float FontSize, String text){
-		draw(x, y, FontSize, text, Color.white);
+	public void draw(double x , double y , double FontSize, String text){
+		draw(x, y, FontSize, text, Color.white, Location.TOP_LEFT);
 	}
 	/**
 	 * Renders the text on the screen.
@@ -52,23 +58,69 @@ public class Text{
 	 * @param text Output text as a String
 	 * @param color the color of the text (Slick Util)
 	 */
-	public void draw(float x , float y , float FontSize, String text, Color color){
+	public void draw(double x , double y , double FontSize, String text, Color color, Location location){
 		// Remember the current settings
 		lastX = x;
 		lastY = y;
 		lastFontSize = FontSize;
 		lastColor = color;
+		lastLocation = location;
+		
+		double dXForLocation, dYForLocation;
 		
 		// Scale the font texture
-		float derivedFont = FontSize/baseFontSize;
+		double derivedFont = FontSize/baseFontSize;
+		
+		// Check for the location setting
+		// Adjust X
+		switch (location){
+		case TOP_CENTER:
+		case MID_CENTER:
+		case BOT_CENTER:
+			dXForLocation = - getWidth(FontSize, text)/2;
+			break;		
+		case TOP_RIGHT:
+		case MID_RIGHT:
+		case BOT_RIGHT:
+			dXForLocation = - getWidth(FontSize, text);
+			break;	
+		default:
+			dXForLocation = 0;
+			break;
+		}
+		
+		// Adjust Y
+		switch (location){
+		case MID_LEFT:
+		case MID_CENTER:
+		case MID_RIGHT:
+			dYForLocation = - getHeight(FontSize)/2;
+			break;		
+		case BOT_LEFT:
+		case BOT_CENTER:
+		case BOT_RIGHT:
+			dYForLocation = - getHeight(FontSize);
+			break;	
+		default:
+			dYForLocation = 0;
+			break;
+		}
+		
+		// Save the current settings
 		glPushAttrib(GL_ENABLE_BIT);
+		// Enable transparency
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glPushMatrix();
-		glTranslatef(x, y, 0);
-		glScalef(derivedFont, derivedFont, derivedFont);
+		
+		// Save the rotation Matrix
+		glPushMatrix();		
+		
+		glTranslated(x+dXForLocation, y+dYForLocation, 0);
+		glScaled(derivedFont, derivedFont, derivedFont);
 		TextureImpl.unbind();
 		myfont.drawString(0, 0, text,color);
+		
+		// Restore settings
 		glPopMatrix();
 		glPopAttrib();
 	}
@@ -78,13 +130,14 @@ public class Text{
 		lastY = 0;
 		lastFontSize = 12;
 		lastColor = Color.white;
+		lastLocation = Location.TOP_LEFT;
 	}
 	/**
 	 * Draw using previous settings.
 	 * @param text
 	 */
 	public void draw(String text){
-		draw(lastX, lastY, lastFontSize, text, lastColor);
+		draw(lastX, lastY, lastFontSize, text, lastColor, lastLocation);
 	}
 	/**
 	 * Go to the next line. After this command use the draw method with only a String as input.
@@ -98,7 +151,7 @@ public class Text{
 	 * @param text your string
 	 * @return the width world coordinate scale
 	 */
-	public double getWidth(float FontSize, String text){
+	public double getWidth(double FontSize, String text){
 		return (myfont.getWidth(text)*FontSize/baseFontSize);
 	}
 	/**
@@ -106,7 +159,7 @@ public class Text{
 	 * @param FontSize
 	 * @return the height in world coordinate scale
 	 */
-	public double getHeight(float FontSize){
+	public double getHeight(double FontSize){
 		return (myfont.getHeight()*FontSize/baseFontSize);
 	}
 	/**

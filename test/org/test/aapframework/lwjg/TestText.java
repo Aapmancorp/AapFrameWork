@@ -1,6 +1,7 @@
 package org.test.aapframework.lwjg;
 
 import org.aapframework.lwjgl.Text;
+import org.aapframework.lwjgl.Text.Location;
 import org.aapframework.lwjgl.window.Window;
 import org.newdawn.slick.Color;
 
@@ -15,7 +16,7 @@ public class TestText {
 			window.clearScreen();
 			
 			// Put text on the screen
-			CONSOLAS.draw(0, 0, 35, "Hello World!\n Hello World!",Color.orange);
+			CONSOLAS.draw(200, 200, 35, "Hello World!\n Hello World!",Color.orange,Location.MID_CENTER);
 			CONSOLAS.newLine();
 			CONSOLAS.newLine();
 			CONSOLAS.draw("Ja? Wie is daar?");
