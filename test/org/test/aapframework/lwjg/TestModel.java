@@ -7,11 +7,8 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
 import static org.lwjgl.glfw.GLFW.glfwGetKey;
 import static org.lwjgl.opengl.GL11.*;
 
-import java.awt.Desktop;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 import org.aapframework.logger.Logger;
 import org.aapframework.logger.Logger.Severity;

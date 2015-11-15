@@ -1,8 +1,8 @@
 package org.aapframework.lwjgl.formObjects;
 
+import org.aapframework.events.Mouse;
 import org.aapframework.events.Observable;
 import org.aapframework.events.Observer;
-import org.aapframework.lwjgl.mouse.Mouse;
 import org.aapframework.lwjgl.objects.Std2DObject;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
