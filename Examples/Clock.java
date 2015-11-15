@@ -62,7 +62,7 @@ public class Clock {
 			glTranslated(window.getWindowWidth()/2, window.getWindowHeight()/2, 0);
 			
 			// Draw the outside
-			StdShapes.drawLineCircle(window.getWindowHeight()/2, 100, 5);
+			StdShapes.drawLineCircle(window.getWindowHeight()/2, 1000, 5);
 			
 			// Draw the digital clock
 			CONSOLAS.draw(0, window.getWindowHeight()/3, 60, getTime.getCurrentTimeStamp("HH:mm:ss"), Color.white, Location.MID_CENTER);

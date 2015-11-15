@@ -7,8 +7,11 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
 import static org.lwjgl.glfw.GLFW.glfwGetKey;
 import static org.lwjgl.opengl.GL11.*;
 
+import java.awt.Desktop;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import org.aapframework.logger.Logger;
 import org.aapframework.logger.Logger.Severity;
@@ -29,11 +32,18 @@ public class TestModel {
 		Cube cube = new Cube(0, 0, 0, 10);
 		Logger log = Logger.getInstance();
 		Axis axis = new Axis(0, 10, 0, 50);
-		Text CONSOLAS = new Text("./res/Consolas.ttf");	
+		Text CONSOLAS = new Text("./res/VIPESI.ttf");	
 		log.setReportingLevel(Severity.DEBUG);
 		
-		Button button = new Button(0.0, 0.0, 200.0, 300.0,Util.loadtexture("./res/cubeZhiLi.png", false),Util.loadtexture("./res/texture.jpg", false),"1",CONSOLAS,Color.white);
+		Button button = new Button(0.0, 0.0, 200.0, 300.0,Util.loadtexture("./res/cubeZhiLi.png", false)
+				,Util.loadtexture("./res/texture.jpg", false),"Hello My Friend",CONSOLAS,Color.white){
+			@Override
+			public void buttonAction(){
+				log.debug("Button clicked");
+			}
+		};
 //		Button button2 = new Button(500, 500, 200, 300);
+	
 		
 		window.getMouse().addObserver(button);
 //		window.getMouse().addObserver(button2);

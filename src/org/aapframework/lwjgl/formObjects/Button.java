@@ -12,7 +12,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.util.ArrayList;
 
-public class Button extends Std2DObject implements Observer, Observable{
+public abstract class Button extends Std2DObject implements Observer, Observable{
 
 	private double mouseX = -1;
 	private double mouseY = -1;
@@ -91,6 +91,7 @@ public class Button extends Std2DObject implements Observer, Observable{
 			
 			// Tell all observers that this button has been clicked on
 			if (isLeftMouseDown && isButton()){
+				buttonAction();
 				notifyAllObservers();
 			}								
 		}
@@ -112,5 +113,7 @@ public class Button extends Std2DObject implements Observer, Observable{
 			obs.update(this);
 		}
 	}
+	
+	public abstract void buttonAction();
 
 }
