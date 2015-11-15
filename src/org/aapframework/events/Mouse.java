@@ -1,4 +1,4 @@
-package org.aapframework.lwjgl.mouse;
+package org.aapframework.events;
 import static org.lwjgl.glfw.GLFW.*;
 
 import org.lwjgl.glfw.*;
