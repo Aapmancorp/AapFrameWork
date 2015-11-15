@@ -1,4 +1,4 @@
-package org.aapframework.events;
+package org.aapframework.lwjgl.events;
 import static org.lwjgl.glfw.GLFW.*;
 
 import org.lwjgl.glfw.*;

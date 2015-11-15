@@ -1,4 +1,4 @@
-package org.aapframework.events;
+package org.aapframework.lwjgl.events;
 
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import static org.lwjgl.glfw.GLFW.*;

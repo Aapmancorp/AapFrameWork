@@ -7,7 +7,7 @@ import org.lwjgl.system.MemoryUtil;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
-import org.aapframework.events.Mouse;
+import org.aapframework.lwjgl.events.Mouse;
 import org.aapframework.logger.Logger;
 
 public class SimpleWindow {

@@ -5,7 +5,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.aapframework.logger.Logger;
-import org.aapframework.events.Mouse;
+import org.aapframework.lwjgl.events.Mouse;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.system.MemoryUtil;
