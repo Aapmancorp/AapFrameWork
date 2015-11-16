@@ -5,6 +5,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.aapframework.logger.Logger;
+import org.aapframework.lwjgl.events.Keyboard;
 import org.aapframework.lwjgl.events.Mouse;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GLContext;
@@ -16,6 +17,7 @@ public class Window extends GLFWWindowSizeCallback{
 	private int windowWidth;
 	private Mouse mouse;
 	private boolean drawOn2D;
+	private Keyboard keyboard;
 	
 	Logger log = Logger.getInstance();
 	
@@ -26,9 +28,6 @@ public class Window extends GLFWWindowSizeCallback{
 		
 		// Initailize window
 		initWindow(windowWidth, windowHeight, windowTitle);
-		
-		// Create mouse
-		mouse = new Mouse(windowID);
 	}
 
 	public Window(String windowTitle){
@@ -36,9 +35,6 @@ public class Window extends GLFWWindowSizeCallback{
 		this.windowHeight = 600;		
 		// Initialize window
 		initWindow(windowWidth,windowHeight, windowTitle);
-		
-		// Create mouse
-		mouse = new Mouse(windowID);
 	}
 	
 	private void initWindow(int windowWidth, int windowHeight, String windowTitle){
@@ -88,6 +84,12 @@ public class Window extends GLFWWindowSizeCallback{
 				
 				// setDrawing mode to 2D
 				drawOn2D();
+				
+				// Create mouse
+				mouse = new Mouse(windowID);
+				
+				//create Keyboard
+				keyboard = new Keyboard(windowID);
 	}
 	
 	public void drawOn2D(){
@@ -226,6 +228,14 @@ public class Window extends GLFWWindowSizeCallback{
 
 	public void setLog(Logger log) {
 		this.log = log;
+	}
+
+	public Keyboard getKeyboard() {
+		return keyboard;
+	}
+
+	public void setKeyboard(Keyboard keyboard) {
+		this.keyboard = keyboard;
 	}
 	
 }
