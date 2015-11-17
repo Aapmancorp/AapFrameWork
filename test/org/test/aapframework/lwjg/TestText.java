@@ -7,7 +7,7 @@ import org.newdawn.slick.Color;
 
 public class TestText {
 	public static void main(String[] args){
-		Window window = new Window(1280, 720, "Text test");
+		Window window = new Window(1280, 720, "Text test",false);
 		//Make text
 		Text CONSOLAS = new Text("./res/Consolas.ttf");		
 		

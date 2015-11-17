@@ -13,7 +13,7 @@ import org.aapframework.lwjgl.window.Window;
 public class testWindow {
 
 	public static void main(String[] args){
-		Window window = new Window(1280,720,"Test");
+		Window window = new Window(1280,720,"Test",false);
 		double rotAngle = 0;
 		double X = 0;
 		Cube cube = new Cube(0, 0, 0, 1);

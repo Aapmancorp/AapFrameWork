@@ -23,7 +23,7 @@ import org.newdawn.slick.Color;
 
 public class TestModel {
 	public static void main(String[] args) throws FileNotFoundException, IOException{
-		Window window = new Window(1280,720,"Test");
+		Window window = new Window(1280,720,"Test",true);
 		double rotAngle = 0;
 		double X = 0;
 		Cube cube = new Cube(0, 0, 0, 10);

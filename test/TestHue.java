@@ -2,14 +2,16 @@ import org.aapframework.lwjgl.Color.Hue;
 import org.aapframework.lwjgl.Color.Hue.HueColor;
 import org.aapframework.lwjgl.shapes.StdShapes;
 import org.aapframework.lwjgl.window.Window;
-
 import static org.lwjgl.opengl.GL11.*;
 
 public class TestHue {
-	public static void main(String[] args){
-		Window window = new Window(800, 800, "HueTest");
+	public static void main(String[] args){		
+        
+		Window window = new Window(800, 800, "HueTest",false);
 		window.drawOn2D();
-		Hue hue = new Hue(150, HueColor.BLUE, HueColor.RED);
+				       
+		Hue hue = new Hue(150, HueColor.BLUE, HueColor.RED,
+				HueColor.GREEN);
 		
 		while(!window.isCloseRequested()){
 			window.clearScreen();

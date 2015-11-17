@@ -1,15 +1,15 @@
 package org.aapframework.lwjgl.events;
 
-import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetCharCallback;
 
 import java.util.ArrayList;
 
 import org.aapframework.events.Observable;
 import org.aapframework.events.Observer;
 import org.aapframework.logger.Logger;
-import org.lwjgl.glfw.GLFWKeyCallback;
+import org.lwjgl.glfw.GLFWCharCallback;
 
-public class Keyboard extends GLFWKeyCallback implements Observable{
+public class KeyboardChar extends GLFWCharCallback implements Observable{
 	
 	// This is the window which the eventListener is listening to
 	private long windowID;
@@ -20,9 +20,9 @@ public class Keyboard extends GLFWKeyCallback implements Observable{
 	// Observer list
 	private ArrayList<Observer> observerList = new ArrayList<>();
 	
-	public Keyboard(long windowID){
+	public KeyboardChar(long windowID){
 		this.setWindowID(windowID);
-		glfwSetKeyCallback(windowID, this);
+		glfwSetCharCallback(windowID, this);
 	}
 	
 	public long getWindowID() {
@@ -49,11 +49,10 @@ public class Keyboard extends GLFWKeyCallback implements Observable{
 			obs.update(this);
 		}
 	}
-	
+
 	@Override
-	public void invoke(long window, int key, int scancode, int action, int mods) {
-		log.debug(key+" "+scancode+" "+action+" "+mods);
-		notifyAllObservers();
+	public void invoke(long window, int codepoint) {
+		log.debug("You typed: "+codepoint);		
 	}
 
 }

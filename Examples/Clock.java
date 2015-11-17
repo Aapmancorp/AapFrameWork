@@ -14,7 +14,7 @@ public class Clock {
 	
 	public boolean start(){
 		// Create a window of size 1000px by 1000px with name 'Clock'
-		Window window = new Window(1000,1000,"Clock");
+		Window window = new Window(1000,1000,"Clock",false);
 		
 		// Tell openGL to show a 2D perspective
 		window.drawOn2D();

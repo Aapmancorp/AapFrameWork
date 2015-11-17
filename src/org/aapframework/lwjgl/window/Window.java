@@ -6,6 +6,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import org.aapframework.logger.Logger;
 import org.aapframework.lwjgl.events.Keyboard;
+import org.aapframework.lwjgl.events.KeyboardChar;
 import org.aapframework.lwjgl.events.Mouse;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GLContext;
@@ -18,26 +19,27 @@ public class Window extends GLFWWindowSizeCallback{
 	private Mouse mouse;
 	private boolean drawOn2D;
 	private Keyboard keyboard;
+	private KeyboardChar keyboardChar;
 	
 	Logger log = Logger.getInstance();
 	
 	
-	public Window(int windowWidth, int windowHeight, String windowTitle){
+	public Window(int windowWidth, int windowHeight, String windowTitle, boolean resizable){
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;		
 		
 		// Initailize window
-		initWindow(windowWidth, windowHeight, windowTitle);
+		initWindow(windowWidth, windowHeight, windowTitle, resizable);
 	}
 
 	public Window(String windowTitle){
 		this.windowWidth = 800;
 		this.windowHeight = 600;		
 		// Initialize window
-		initWindow(windowWidth,windowHeight, windowTitle);
+		initWindow(windowWidth,windowHeight, windowTitle, true);
 	}
 	
-	private void initWindow(int windowWidth, int windowHeight, String windowTitle){
+	private void initWindow(int windowWidth, int windowHeight, String windowTitle, boolean resizable){
 				// Initialize GLFW:
 				int glfwInitializationResult = glfwInit(); // initialize GLFW and store the result (pass or fail)
 				
@@ -47,7 +49,11 @@ public class Window extends GLFWWindowSizeCallback{
 					throw new IllegalStateException("GLFW initialization failed");
 				}
 				
-				log.debug("Window succesfully initialized!");
+				log.debug("Window succesfully initialized!");	
+				
+				glfwDefaultWindowHints();
+				// Set window resizable flag
+		        glfwWindowHint(GLFW_RESIZABLE, (resizable? GL_TRUE : GL_FALSE)); 
 				
 				// Configure the GLFW window
 				windowID = glfwCreateWindow(
@@ -90,6 +96,9 @@ public class Window extends GLFWWindowSizeCallback{
 				
 				//create Keyboard
 				keyboard = new Keyboard(windowID);
+				
+				// create Keyboard char listener
+				keyboardChar = new KeyboardChar(windowID);
 	}
 	
 	public void drawOn2D(){
@@ -236,6 +245,14 @@ public class Window extends GLFWWindowSizeCallback{
 
 	public void setKeyboard(Keyboard keyboard) {
 		this.keyboard = keyboard;
+	}
+
+	public KeyboardChar getKeyboardChar() {
+		return keyboardChar;
+	}
+
+	public void setKeyboardChar(KeyboardChar keyboardChar) {
+		this.keyboardChar = keyboardChar;
 	}
 	
 }
