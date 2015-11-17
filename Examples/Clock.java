@@ -14,7 +14,7 @@ public class Clock {
 	
 	public boolean start(){
 		// Create a window of size 1000px by 1000px with name 'Clock'
-		Window window = new Window(1000,1000,"Clock",false);
+		Window window = new Window(600,600,"Clock",true);
 		
 		// Tell openGL to show a 2D perspective
 		window.drawOn2D();
@@ -36,12 +36,18 @@ public class Clock {
 		// initialise current total seconds
 		int currentTotalSeconds = 0;
 		
+		// Initialise variable for clock radius
+		int clockRadius = 0;
+		
 		// Initialise font
 		Text CONSOLAS = new Text("./res/Consolas.ttf");
 		
 		// Main drawing loop
 		while(!window.isCloseRequested()){
 			window.clearScreen();
+			
+			// Set clock radius
+			clockRadius = Math.min(window.getWindowHeight(), window.getWindowWidth())/2;
 			
 			// Update currentTimestamp
 			currentTimeStamp = getTime.getCurrentTimeStamp("hh:mm:ss");
@@ -62,16 +68,16 @@ public class Clock {
 			glTranslated(window.getWindowWidth()/2, window.getWindowHeight()/2, 0);
 			
 			// Draw the outside
-			StdShapes.drawLineCircle(window.getWindowHeight()/2, 1000, 5);
+			StdShapes.drawLineCircle(clockRadius, 1000, 5);
 			
 			// Draw the digital clock
-			CONSOLAS.draw(0, window.getWindowHeight()/3, 60, getTime.getCurrentTimeStamp("HH:mm:ss"), Color.white, Location.MID_CENTER);
+			CONSOLAS.draw(0, clockRadius/2, 60, getTime.getCurrentTimeStamp("HH:mm:ss"), Color.white, Location.MID_CENTER);
 			
 			// Draw the numbers
-			CONSOLAS.draw(window.getWindowWidth()/2, 0, 60, "3", Color.white, Location.MID_RIGHT);
-			CONSOLAS.draw(0, window.getWindowHeight()/2, 60, "6", Color.white, Location.BOT_CENTER);
-			CONSOLAS.draw(-window.getWindowWidth()/2, 0, 60, "9", Color.white, Location.MID_LEFT);
-			CONSOLAS.draw(0, -window.getWindowHeight()/2, 60, "12", Color.white, Location.TOP_CENTER);
+			CONSOLAS.draw(clockRadius, 0, 60, "3", Color.white, Location.MID_RIGHT);
+			CONSOLAS.draw(0, clockRadius, 60, "6", Color.white, Location.BOT_CENTER);
+			CONSOLAS.draw(-clockRadius, 0, 60, "9", Color.white, Location.MID_LEFT);
+			CONSOLAS.draw(0, -clockRadius, 60, "12", Color.white, Location.TOP_CENTER);
 			
 			// Draw the hour pointer
 			glPushMatrix();
@@ -79,7 +85,7 @@ public class Clock {
 			glLineWidth(6);
 			glBegin(GL_LINES);
 				glVertex2d(0, 0);
-				glVertex2d(0, - window.getWindowWidth()/4);
+				glVertex2d(0, - clockRadius/2);
 			glEnd();			
 			glPopMatrix();
 			
@@ -89,7 +95,7 @@ public class Clock {
 			glLineWidth(4);
 			glBegin(GL_LINES);
 				glVertex2d(0, 0);
-				glVertex2d(0, -window.getWindowWidth()/3);
+				glVertex2d(0, -clockRadius*2/3);
 			glEnd();			
 			glPopMatrix();
 			
@@ -99,7 +105,7 @@ public class Clock {
 			glLineWidth(4);
 			glBegin(GL_LINES);
 				glVertex2d(0, 0);
-				glVertex2d(0, -window.getWindowWidth()/2*0.95);
+				glVertex2d(0, -clockRadius*0.95);
 			glEnd();			
 			glPopMatrix();
 			
