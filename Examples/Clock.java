@@ -110,6 +110,7 @@ public class Clock {
 			glPopMatrix();
 			
 			glPopMatrix();
+			
 			// Update the screen
 			window.updateScreen();
 		}		

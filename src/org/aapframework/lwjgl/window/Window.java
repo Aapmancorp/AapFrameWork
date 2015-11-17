@@ -135,6 +135,10 @@ public class Window extends GLFWWindowSizeCallback{
 		glfwSwapBuffers(windowID);
 	}
 	
+	public void setTitle(String title){
+		glfwSetWindowTitle(windowID, title);
+	}
+	
 	/**
 	 * Handles the window resized event. When the window is resized the viewport and projection matrix need to be
 	 * adjusted as well.
